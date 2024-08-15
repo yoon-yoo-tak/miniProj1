@@ -21,6 +21,7 @@ public class Main {
 	}
 	
 	private static void mainMenu() {
+		System.out.println("======================");
 		System.out.println("1. 회원가입");
 		System.out.println("2. 로그인");
 		System.out.println("3. 종료");
@@ -31,7 +32,7 @@ public class Main {
 			// 회원가입
 			case 1 -> register();
 			// 로그인
-			case 2 -> {}
+			case 2 -> login();
 			case 3 -> {
 				System.out.println("시스템을 종료합니다.");
 				System.exit(0);
@@ -40,6 +41,21 @@ public class Main {
 		
 	}
 	
+	private static void login() {
+		sc = new Scanner(System.in);
+		System.out.print("아이디 : ");
+		String username = sc.nextLine();
+		System.out.println("비밀번호 : ");
+		String password = sc.nextLine();
+		
+		if (memberService.login(username, password)) {
+			loginId = memberService.getId(username);
+			System.out.println("로그인 성공");
+			return;
+		}
+		System.out.println("로그인 실패");
+	}
+
 	private static void register() {
 		sc = new Scanner(System.in);
 		System.out.println("회원 가입 화면");
@@ -61,13 +77,6 @@ public class Main {
 		
 		System.out.print("성별 (남/여):");
 		String gender = sc.nextLine();
-		
-		System.out.println("username : " + username);
-		System.out.println("password : " + password);
-		System.out.println("name : " + name);
-		System.out.println("phone : " + phone);
-		System.out.println("address : " + address);
-		System.out.println("gender : " + gender);
 		memberService.registerMember(username, password, name, phone, address, gender);
 	}
 	

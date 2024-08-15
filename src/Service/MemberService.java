@@ -2,6 +2,7 @@ package Service;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import util.DBUtil;
@@ -34,5 +35,48 @@ public class MemberService {
 			e.printStackTrace();
 			return false;
 		}
+	}
+	
+	public boolean login(String username, String password) {
+		String query = """
+				SELECT ID
+				FROM MEMBER
+				WHERE USERID = ?
+				AND PASSWORD = ?
+				AND ISDEL = '0'
+				""";
+		try(Connection conn = db.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(query);){
+			pstmt.setString(1, username);
+			pstmt.setString(2, password);
+			ResultSet rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				int id = rs.getInt("id");
+				loginRecord(id);
+				return true;
+			}
+			return false;
+			
+		}catch(SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public void loginRecord(int id) {
+		String procedure = "{call login_record(?)}";
+		try (Connection conn = db.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(procedure);){
+			pstmt.setInt(1, id);
+			pstmt.execute();
+		}catch(SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public long getId(String username) {
+		
+		return 1L;
 	}
 }
