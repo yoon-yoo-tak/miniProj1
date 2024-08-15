@@ -219,5 +219,18 @@ public class MemberService {
 		}
 		return null;
 	}
+	
+	public void deleteMember(int id) {
+		String procedure = "{call delete_member(?)}";
+		try(Connection conn = db.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(procedure);){
+				pstmt.setInt(1, id);
+				pstmt.execute();
+				System.out.println("회원 탈퇴를 완료했습니다.");
+		}catch(SQLException | ClassNotFoundException e) {
+			System.out.println("회원 탈퇴 실패");
+			e.printStackTrace();
+		}
+	}
 
 }

@@ -168,7 +168,8 @@ public class Main {
 	}
 
 	private static void deleteMember() {
-		 
+		 memberService.deleteMember(loginId);
+		 loginId = -1;
 	}
 
 	private static void updateMember() {
