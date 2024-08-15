@@ -90,4 +90,24 @@ public class BoardService {
 			e.printStackTrace();
 		}
 	}
+
+	public void updateArticle(int id, String title, String content) {
+		String query = """
+				UPDATE BOARD
+				SET TITLE = ?,
+				CONTENT = ?
+				WHERE ID = ?
+				""";
+		try(Connection conn = db.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(query)){
+			pstmt.setString(1, title);
+			pstmt.setString(2, content);
+			pstmt.setInt(3, id);
+			pstmt.executeUpdate();		
+			System.out.println("수정 완료");
+		}catch(SQLException | ClassNotFoundException e) {
+			System.out.println("수정 실패");
+			e.printStackTrace();
+		}
+	}
 }

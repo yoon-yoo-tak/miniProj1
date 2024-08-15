@@ -338,12 +338,29 @@ public class Main {
 	}
 
 	private static void deleteArticle(int id) {
-		boardService.deleteArticle(id);
+		System.out.print("비밀번호를 한 번 더 입력해 주세요. : ");
+		sc = new Scanner(System.in);
+		String password = sc.nextLine();
+		if (checkPassword(loginId, password))
+			boardService.deleteArticle(id);
+		else {
+			System.out.println("비밀번호가 일치하지 않습니다. 초기화면으로 돌아갑니다.");
+		}
 	}
 
 	private static void updateArticle(int id) {
-		
+		System.out.print("비밀번호를 한 번 더 입력해 주세요. : ");
+		sc = new Scanner(System.in);
+		String password = sc.nextLine();
+		if (checkPassword(loginId, password)) {
+			System.out.println("변경할 제목을 입력해주세요. : ");
+			String title = sc.nextLine();
+			System.out.println("변경할 내용을 입력해주세요. : ");
+			String content = sc.nextLine();
+			boardService.updateArticle(id, title, content);
+		}
+		else {
+			System.out.println("비밀번호가 일치하지 않습니다. 초기화면으로 돌아갑니다.");
+		}
 	}
-	
-
 }
