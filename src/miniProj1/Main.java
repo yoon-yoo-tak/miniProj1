@@ -19,6 +19,7 @@ public class Main {
 				userMenu();
 			}
 		}
+		
 	}
 	
 	private static void mainMenu() {
@@ -49,12 +50,26 @@ public class Main {
 		System.out.println("비밀번호 : ");
 		String password = sc.nextLine();
 		
-		if (memberService.login(username, password)) {
-			loginId = memberService.getId(username);
-			System.out.println("로그인 성공");
-			return;
+		System.out.println("1. 로그인");
+		System.out.println("2. 다시 입력");
+		System.out.println("3. 이전 화면으로");
+		
+		System.out.print("원하는 기능의 번호를 입력해주세요 : ");
+		int x = sc.nextInt();
+		switch(x) {
+			case 1 ->{
+				if (memberService.login(username, password)) {
+					loginId = memberService.getId(username);
+					System.out.println("로그인 성공");
+				}else {
+					System.out.println("로그인 실패");
+				}
+			}
+			case 2 -> login();
+			case 3 -> {}
 		}
-		System.out.println("로그인 실패");
+		
+		
 	}
 
 	private static void register() {
@@ -109,14 +124,13 @@ public class Main {
 		} 
 	}
 
-	private static Object getBoardList() {
-		// TODO Auto-generated method stub
-		return null;
+	private static void getBoardList() {
+
+		
 	}
 
-	private static Object getMemberInfo() {
-		// TODO Auto-generated method stub
-		return null;
+	private static void getMemberInfo() {
+		memberService.getmemberInfo(loginId);
 	}
 	
 	

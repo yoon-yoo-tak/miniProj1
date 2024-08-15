@@ -50,7 +50,6 @@ public class MemberService {
 			pstmt.setString(1, username);
 			pstmt.setString(2, password);
 			ResultSet rs = pstmt.executeQuery();
-			
 			if (rs.next()) {
 				int id = rs.getInt("id");
 				loginRecord(id);
@@ -86,6 +85,7 @@ public class MemberService {
 				pstmt.setString(1, username);
 				ResultSet rs = pstmt.executeQuery();
 				if (rs.next()) return rs.getInt("id");
+				else return -1;
 			}catch(SQLException | ClassNotFoundException e) {
 				e.printStackTrace();
 			}
@@ -98,5 +98,30 @@ public class MemberService {
 		PreparedStatement pstmt = conn.prepareStatement(logout_record);
 		pstmt.setInt(1, id);
 		pstmt.execute();
+	}
+
+	public void getmemberInfo(int id) {
+		String query = """
+				SELECT *
+				FROM MEMBER
+				WHERE ID = ?
+				""";
+		try(Connection conn = db.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(query);){
+				pstmt.setInt(1, id);
+				ResultSet rs = pstmt.executeQuery();
+				if (rs.next()) {
+					System.out.println("아이디 : " + rs.getString("userid"));
+					System.out.println("이름 : " + rs.getString("name"));
+					System.out.println("전화번호 : " + rs.getString("phone"));
+					System.out.println("주소 : " + rs.getString("address"));
+					String gender = rs.getString("gender");
+					System.out.println("성별 : " + (gender.equals("0") ? "남자" : "여자"));
+				}
+				
+			}catch(SQLException | ClassNotFoundException e) {
+				e.printStackTrace();
+				
+			}
 	}
 }
