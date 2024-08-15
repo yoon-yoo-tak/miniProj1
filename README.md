@@ -13,7 +13,7 @@
 ### Member
 - [x] 회원가입
 - [ ] 로그인
-  - [ ] LoginHistory, Member 기록
+  - [x] LoginHistory, Member 기록 (procedure)
   - [ ] admin Check
 - [ ] 아이디 찾기
 - [ ] 회원정보 수정
