@@ -124,4 +124,58 @@ public class MemberService {
 				
 			}
 	}
+
+	public void updateMember(int loginId, String username, String password, String name, String phone,
+			String address) {
+		String query = """
+				UPDATE MEMBER
+				SET
+				USERID = ?,
+				PASSWORD = ?,
+				NAME = ?,
+				PHONE = ?,
+				ADDRESS = ?
+				WHERE ID = ?
+				""";
+		try(Connection conn = db.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(query);){
+				pstmt.setString(1, username);
+				pstmt.setString(2, password);
+				pstmt.setString(3, name);
+				pstmt.setString(4, phone);
+				pstmt.setString(5, address);
+				pstmt.setInt(6, loginId);
+				int ret = pstmt.executeUpdate();
+				if (ret == 1) {
+					System.out.println("회원 정보 수정 성공.");
+				}else {
+					System.out.println("회원 정보 수정 실패");
+				}
+			
+		}catch(SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+			
+		}
+	}
+
+	public boolean checkPassword(int loginId, String password) {
+		String query = """
+				select *
+				from member
+				where id = ?
+				""";
+		try(Connection conn = db.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(query);){
+				pstmt.setInt(1, loginId);
+				ResultSet rs = pstmt.executeQuery();
+				if(rs.next()) {
+					return rs.getString("password").equals(password);
+				}
+		}catch(SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+			
+		}
+		return false;
+	}
+
 }

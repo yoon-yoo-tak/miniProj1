@@ -131,6 +131,66 @@ public class Main {
 
 	private static void getMemberInfo() {
 		memberService.getmemberInfo(loginId);
+		sc = new Scanner(System.in);
+		System.out.println("원하는 기능의 번호를 입력해주세요.");
+		System.out.println("1. 내 정보 수정");
+		System.out.println("2. 회원탈퇴");
+		System.out.println("3. 이전화면으로");
+		int x = sc.nextInt();
+		
+		switch(x) {
+			// 내정보 수정
+			case 1 -> {
+				System.out.print("비밀번호를 한 번 더 입력해 주세요. : ");
+				sc = new Scanner(System.in);
+				String password = sc.nextLine();
+				if (checkPassword(loginId, password))
+					updateMember();
+				else {
+					System.out.println("비밀번호가 일치하지 않습니다. 초기화면으로 돌아갑니다.");
+				}
+				}
+			// 회원탈퇴
+			case 2 -> deleteMember();
+			// 이전화면으로
+			case 3 -> {}
+		}
+	}
+
+	private static boolean checkPassword(int loginId, String password) {
+		return memberService.checkPassword(loginId, password);
+	}
+
+	private static void deleteMember() {
+		 
+	}
+
+	private static void updateMember() {
+		sc = new Scanner(System.in);
+		System.out.println("정보를 수정합니다.");
+		System.out.println("변경할 아이디 : ");
+		String username = sc.nextLine();
+		System.out.println("변경할 비밀번호 : ");
+		String password = sc.nextLine();
+		System.out.println("변경할 이름 : ");
+		String name = sc.nextLine();
+		System.out.println("변경할 전화번호 : ");
+		String phone = sc.nextLine();
+		System.out.println("변경할 주소 : ");
+		String address = sc.nextLine();
+		
+		System.out.println("원하는 기능의 번호를 입력해주세요 : ");
+		System.out.println("1. 변경하기");
+		System.out.println("2. 다시 입력");
+		System.out.println("3. 이전 화면으로");
+		int x = sc.nextInt();
+		switch(x) {
+			case 1 -> {
+				memberService.updateMember(loginId, username, password, name, phone, address);
+				}
+			case 2 -> updateMember();
+			case 3 -> {}
+		}
 	}
 	
 	
