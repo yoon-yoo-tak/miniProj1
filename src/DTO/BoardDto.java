@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 
 public record BoardDto(
 		int id,
+		int key,
 		int memberId,
 		String title,
 		String content,

@@ -145,7 +145,7 @@ public class Main {
 		while (isContinue) {
 			List<BoardDto> list = boardService.getBoardList(curPage);
 			if (list.size() == 0) {
-				System.out.println(curPage + "페이지에 게시물이 존재하지 않습니다. 이전 화면으로 돌아갑니다.");
+				System.out.println(curPage + "페이지에 게시물이 존재하지 않습니다. 초기 화면으로 돌아갑니다.");
 				return;
 			}
 			printBoard(list, curPage);
@@ -181,7 +181,9 @@ public class Main {
 				case 3 -> curPage++;
 				
 				// 상세보기
-				case 4 -> {}
+				case 4 -> {
+					viewDetail(list);
+				}
 				// 글쓰기
 				case 5 -> {}
 				// 끝내기
@@ -302,5 +304,46 @@ public class Main {
 			System.out.println(b.id() + " || " + b.writer() + " || " + b.title() + " || " + b.viewCnt() + " || " + formatDateTime(b.createdAt().toLocalDateTime()));
 		}
 	}
+	
+	public static void viewDetail(List<BoardDto> list) {
+		System.out.println("게시글 번호를 입력해 주세요. : ");
+		sc = new Scanner(System.in);
+		int id = sc.nextInt();
+		int start = list.get(0).id();
+		int end = list.getLast().id();
+		if (id < start || end < id) {
+			System.out.println("잘못된 번호를 입력했습니다. 이전 화면으로 돌아갑니다.");
+			return;
+		}
+		int idx = (id - 1) % 10;
+		BoardDto b = list.get(idx);
+		boardService.increaseViewCnt(b.key());
+		System.out.println("#################### "+id + "번 게시글 상세보기 ####################");
+		System.out.println(b.id() + " || " + b.writer() + " || " + b.title() + " || " + b.viewCnt() + " || " + formatDateTime(b.createdAt().toLocalDateTime()));
+		boolean isWriter = loginId == b.memberId();
+		System.out.println("1. 이전 페이지로 돌아가기");
+		if (isWriter) { // 작성자
+			System.out.println("2. 수정하기");
+			System.out.println("3. 삭제하기");
+		}
+		int oper = sc.nextInt();
+		
+		if (oper == 1) {
+			return;
+		}else if (oper == 2 && isWriter) {
+			updateArticle(b.id());
+		}else if (oper == 3 && isWriter) {
+			deleteArticle(b.id());
+		}
+	}
+
+	private static void deleteArticle(int id) {
+		boardService.deleteArticle(id);
+	}
+
+	private static void updateArticle(int id) {
+		
+	}
+	
 
 }

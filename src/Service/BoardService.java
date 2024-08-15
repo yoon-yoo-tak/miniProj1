@@ -43,6 +43,7 @@ public class BoardService {
 			while(rs.next()) {
 				list.add(new BoardDto(
 						rs.getInt("rnum"),
+						rs.getInt("id"),
 						rs.getInt("memberId"),
 						rs.getString("title"),
 						rs.getString("content"),
@@ -56,5 +57,37 @@ public class BoardService {
 			e.printStackTrace();
 		}
 		return list;
+	}
+	
+	public void increaseViewCnt(int boardId) {
+		String query = """
+				UPDATE BOARD
+				SET VIEWCNT = VIEWCNT + 1
+				WHERE ID = ?
+				""";
+		try(Connection conn = db.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(query)){
+				pstmt.setInt(1, boardId);
+				pstmt.executeUpdate();				
+			}catch(SQLException | ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+	}
+
+	public void deleteArticle(int id) {
+		String query = """
+				UPDATE BOARD
+				SET ISDEL = '1'
+				WHERE ID = ?
+				""";
+		try(Connection conn = db.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(query)){
+			pstmt.setInt(1, id);
+			pstmt.executeUpdate();		
+			System.out.println("삭제 완료");
+		}catch(SQLException | ClassNotFoundException e) {
+			System.out.println("삭제 실패");
+			e.printStackTrace();
+		}
 	}
 }
