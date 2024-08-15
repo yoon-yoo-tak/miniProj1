@@ -181,11 +181,10 @@ public class Main {
 				case 3 -> curPage++;
 				
 				// 상세보기
-				case 4 -> {
-					viewDetail(list);
-				}
+				case 4 -> viewDetail(list);
+				
 				// 글쓰기
-				case 5 -> {}
+				case 5 -> writeArticle();
 				// 끝내기
 				case 6 -> {
 					isContinue = false;
@@ -194,6 +193,8 @@ public class Main {
 		}
 	}
 
+
+	
 
 	private static void getMemberInfo() {
 		memberService.getmemberInfo(loginId);
@@ -301,7 +302,7 @@ public class Main {
 	private static void printBoard(List<BoardDto> list, int page) {
 		System.out.println("#################### "+page + "페이지 ####################");
 		for (BoardDto b: list) {
-			System.out.println(b.id() + " || " + b.writer() + " || " + b.title() + " || " + b.viewCnt() + " || " + formatDateTime(b.createdAt().toLocalDateTime()));
+			System.out.println(b.id() + " || " + b.writer() + " || " + b.title() + " || " + b.content() + " || " + b.viewCnt() + " || " + formatDateTime(b.createdAt().toLocalDateTime()));
 		}
 	}
 	
@@ -319,7 +320,7 @@ public class Main {
 		BoardDto b = list.get(idx);
 		boardService.increaseViewCnt(b.key());
 		System.out.println("#################### "+id + "번 게시글 상세보기 ####################");
-		System.out.println(b.id() + " || " + b.writer() + " || " + b.title() + " || " + b.viewCnt() + " || " + formatDateTime(b.createdAt().toLocalDateTime()));
+		System.out.println(b.id() + " || " + b.writer() + " || " + b.title() + " || " + b.content() + " || " + b.viewCnt() + " || " + formatDateTime(b.createdAt().toLocalDateTime()));
 		boolean isWriter = loginId == b.memberId();
 		System.out.println("1. 이전 페이지로 돌아가기");
 		if (isWriter) { // 작성자
@@ -331,9 +332,9 @@ public class Main {
 		if (oper == 1) {
 			return;
 		}else if (oper == 2 && isWriter) {
-			updateArticle(b.id());
+			updateArticle(b.key());
 		}else if (oper == 3 && isWriter) {
-			deleteArticle(b.id());
+			deleteArticle(b.key());
 		}
 	}
 
@@ -363,4 +364,17 @@ public class Main {
 			System.out.println("비밀번호가 일치하지 않습니다. 초기화면으로 돌아갑니다.");
 		}
 	}
+	
+	private static void writeArticle() {
+		sc = new Scanner(System.in);
+		System.out.println("######### 글쓰기 #########");
+		System.out.print("제목을 입력해 주세요 : ");
+		String title = sc.nextLine();
+		System.out.print("내용을 입력해 주세요 : ");
+		String content = sc.nextLine();
+		System.out.print("게시물 비밀번호를 입력해 주세요 : ");
+		String password = sc.nextLine();
+		boardService.writeArticle(loginId,title, content, password);
+	}
+	
 }

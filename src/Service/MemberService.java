@@ -232,5 +232,22 @@ public class MemberService {
 			e.printStackTrace();
 		}
 	}
+	
+	public String getName(int id) {
+		String query = """
+				SELECT NAME
+				FROM MEMBER
+				WHERE ID = ?
+				""";
+		try(Connection conn = db.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(query);){
+			pstmt.setInt(1, id);
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next()) return rs.getString("name");
+		}catch(SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 }
