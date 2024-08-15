@@ -16,9 +16,9 @@
   - [x] LoginHistory, Member 기록 (procedure)
 - [x] 회원정보 조회
 - [x] 회원정보 수정
-- [ ] 아이디 찾기
-- [ ] 비밀번호 찾기
-- [ ] 회원 탈퇴
+- [ ] 아이디 찾기 (이름/전화번호만 체크)
+- [ ] 비밀번호 찾기 (아이디로만 체크)
+- [ ] 회원 탈퇴 
 
 
 ### Board
@@ -39,3 +39,9 @@
 - [ ] Validation Check
 - [ ] 클래스 분리
 - [ ] 예외메시지 처리
+
+
+  
+
+# ERD diagram
+![ERD](https://github.com/yoon-yoo-tak/miniProj1/blob/master/img/erd.JPG?raw=true)

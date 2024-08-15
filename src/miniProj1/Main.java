@@ -26,7 +26,9 @@ public class Main {
 		System.out.println("======================");
 		System.out.println("1. 회원가입");
 		System.out.println("2. 로그인");
-		System.out.println("3. 종료");
+		System.out.println("3. 아이디 찾기");
+		System.out.println("4. 비밀번호 찾기");
+		System.out.println("5. 종료");
 		System.out.print("원하는 기능의 번호를 입력해주세요. : ");
 		sc = new Scanner(System.in);
 		int x = sc.nextInt();
@@ -35,7 +37,11 @@ public class Main {
 			case 1 -> register();
 			// 로그인
 			case 2 -> login();
-			case 3 -> {
+			// 아이디 찾기
+			case 3 -> findId();
+			// 비밀번호 찾기
+			case 4 -> findPassword();
+			case 5 -> {
 				System.out.println("시스템을 종료합니다.");
 				System.exit(0);
 			}
@@ -194,6 +200,17 @@ public class Main {
 	}
 	
 	
-
+	public static void findId() {
+		sc = new Scanner(System.in);
+		System.out.println("아이디 찾기");
+		System.out.print("이름을 입력해 주세요 : ");
+		System.out.print("전화번호를 입력해 주세요 : ");
+	}
+	
+	public static void findPassword() {
+		sc = new Scanner(System.in);
+		System.out.println("비밀번호 찾기");
+		System.out.print("아이디를 입력해 주세요 : ");
+	}
 
 }
