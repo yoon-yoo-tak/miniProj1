@@ -11,7 +11,7 @@
 ## 기능 구현
 
 ### Member
-- [ ] 회원가입
+- [x] 회원가입
 - [ ] 로그인
   - [ ] LoginHistory, Member 기록
   - [ ] admin Check
