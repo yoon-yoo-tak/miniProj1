@@ -23,10 +23,13 @@
 
 ### Board
 - [ ] 글 목록
-- [ ] 글 쓰기
+  - [ ] 페이징
+  - [ ] 페이지 이동
 - [ ] 글 조회
   - [ ] 수정
   - [ ] 삭제
+- [ ] 글 쓰기
+
 
 
 ### Admin
@@ -38,10 +41,8 @@
 ### 추가기능 / 리팩토링
 - [ ] Validation Check
 - [ ] 클래스 분리
-- [ ] 예외메시지 처리
-
-
+- [ ] 상황별 예외메시지 처리
   
 
 # ERD diagram
-![ERD](https://github.com/yoon-yoo-tak/miniProj1/blob/master/img/erd.JPG?raw=true)
+![ERD](https://github.com/yoon-yoo-tak/miniProj1/blob/master/img/erd1.JPG?raw=true)
