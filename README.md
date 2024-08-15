@@ -12,9 +12,8 @@
 
 ### Member
 - [x] 회원가입
-- [ ] 로그인
+- [x] 로그인 / 로그아웃
   - [x] LoginHistory, Member 기록 (procedure)
-  - [ ] admin Check
 - [ ] 아이디 찾기
 - [ ] 회원정보 수정
   - [ ] 비밀번호 찾기

@@ -75,8 +75,28 @@ public class MemberService {
 		}
 	}
 	
-	public long getId(String username) {
-		
-		return 1L;
+	public int getId(String username) {
+		String query = """
+				SELECT ID
+				FROM MEMBER
+				WHERE USERID = ?
+				""";
+		try (Connection conn = db.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(query);){
+				pstmt.setString(1, username);
+				ResultSet rs = pstmt.executeQuery();
+				if (rs.next()) return rs.getInt("id");
+			}catch(SQLException | ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+		return -1;
+	}
+	
+	public void logout(int id) throws SQLException, ClassNotFoundException{
+		String logout_record = "{call logout_record(?)}";
+		Connection conn = db.getConnection();
+		PreparedStatement pstmt = conn.prepareStatement(logout_record);
+		pstmt.setInt(1, id);
+		pstmt.execute();
 	}
 }

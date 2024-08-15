@@ -1,5 +1,6 @@
 package miniProj1;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 import Service.MemberService;
@@ -8,7 +9,7 @@ public class Main {
 	
 	private static Scanner sc;
 	private static MemberService memberService = new MemberService();
-	private static long loginId = -1L;
+	private static int loginId = -1;
 	
 	public static void main(String[] args) {
 		while(true) {
@@ -81,7 +82,41 @@ public class Main {
 	}
 	
 	private static void userMenu() {
-		
+		System.out.println("1. 내 정보 확인");
+		System.out.println("2. 게시물 목록");
+		System.out.println("3. 로그아웃");
+		System.out.print("원하는 기능의 번호를 입력해주세요. : ");
+		sc = new Scanner(System.in);
+		int x = sc.nextInt();
+		switch(x) {
+		// 내정보 확인
+		case 1 -> getMemberInfo();
+		// 게시물 목록
+		case 2 -> getBoardList();
+		// 로그아웃
+		case 3 -> logout();
+	}
+	}
+
+	private static void logout() {
+		try {
+			memberService.logout(loginId);
+			loginId = -1;
+			System.out.println("로그아웃 성공");
+		}catch (SQLException | ClassNotFoundException  e) {
+			System.out.println("로그아웃 실패");
+			e.printStackTrace();
+		} 
+	}
+
+	private static Object getBoardList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private static Object getMemberInfo() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	
