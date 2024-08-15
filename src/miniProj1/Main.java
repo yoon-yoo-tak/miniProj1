@@ -1,20 +1,28 @@
 package miniProj1;
 
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Scanner;
 
+import DTO.BoardDto;
+import Service.BoardService;
 import Service.MemberService;
 
 public class Main {
 	
 	private static Scanner sc;
 	private static MemberService memberService = new MemberService();
+	private static BoardService boardService = new BoardService();
 	private static int loginId = -1;
 	
 	public static void main(String[] args) {
 		while(true) {
-			if (loginId == -1L) {
+			if (loginId == -1) {
 				mainMenu();
+			}else if (loginId == 1){ // 관리자 메뉴
+				
 			}else {
 				userMenu();
 			}
@@ -113,7 +121,7 @@ public class Main {
 		// 내정보 확인
 		case 1 -> getMemberInfo();
 		// 게시물 목록
-		case 2 -> getBoardList();
+		case 2 -> listBoardAndHandling();
 		// 로그아웃
 		case 3 -> logout();
 	}
@@ -130,10 +138,60 @@ public class Main {
 		} 
 	}
 
-	private static void getBoardList() {
-
-		
+	// 처음에는 그냥 1페이지 보여주기
+	private static void listBoardAndHandling() {
+		int curPage = 1;
+		boolean isContinue = true;
+		while (isContinue) {
+			List<BoardDto> list = boardService.getBoardList(curPage);
+			if (list.size() == 0) {
+				System.out.println(curPage + "페이지에 게시물이 존재하지 않습니다. 이전 화면으로 돌아갑니다.");
+				return;
+			}
+			printBoard(list, curPage);
+			System.out.println("""
+					1. 페이지 이동
+					2. 이전 페이지로 이동
+					3. 다음 페이지로 이동
+					4. 게시글 상세보기
+					5. 글 쓰기
+					6. 이전 화면으로
+					원하는 기능을 선택하세요 : """);
+			sc = new Scanner(System.in);
+			int oper = sc.nextInt();
+			switch(oper) {
+				// 특정 페이지로 이동
+				case 1 -> {
+					System.out.print("이동할 페이지 번호를 입력하세요 : ");
+					int pageNum = sc.nextInt();
+					if (pageNum > 0) {
+						curPage = pageNum;
+					}else {
+						System.out.println("잘못된 페이지 번호입니다.");
+					}
+				}
+				
+				// 이전 페이지로
+				case 2 -> {
+					if (curPage > 1) curPage--;
+					else System.out.println("이전 페이지가 존재하지 않습니다.");
+				}
+				
+				// 다음 페이지로
+				case 3 -> curPage++;
+				
+				// 상세보기
+				case 4 -> {}
+				// 글쓰기
+				case 5 -> {}
+				// 끝내기
+				case 6 -> {
+					isContinue = false;
+				}
+			}
+		}
 	}
+
 
 	private static void getMemberInfo() {
 		memberService.getmemberInfo(loginId);
@@ -226,6 +284,22 @@ public class Main {
 			System.out.println("가입하지 않은 아이디거나 입력하신 정보가 다릅니다.");
 		}else {
 			System.out.println("비밀번호 : " + password);
+		}
+	}
+	
+	private static String formatDateTime(LocalDateTime dateTime) {
+		LocalDateTime now = LocalDateTime.now();
+		long diff = java.time.Duration.between(dateTime, now).toHours();
+		if (diff < 24) {
+			return dateTime.format(DateTimeFormatter.ofPattern("HH:mm"));
+		}
+		return dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+	}
+	
+	private static void printBoard(List<BoardDto> list, int page) {
+		System.out.println("#################### "+page + "페이지 ####################");
+		for (BoardDto b: list) {
+			System.out.println(b.id() + " || " + b.writer() + " || " + b.title() + " || " + b.viewCnt() + " || " + formatDateTime(b.createdAt().toLocalDateTime()));
 		}
 	}
 
