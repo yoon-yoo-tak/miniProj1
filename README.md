@@ -12,7 +12,6 @@
 
 ### Member
 - [ ] 회원가입
-  - [ ] Validation Check (추가기능)
 - [ ] 로그인
   - [ ] LoginHistory, Member 기록
   - [ ] admin Check
@@ -35,3 +34,7 @@
   - [ ] 삭제 기능
 - [ ] 글 목록
   - [ ] 삭제 기능
+
+### 추가기능 / 리팩토링
+- [ ] Validation Check
+- [ ] 클래스 분리
