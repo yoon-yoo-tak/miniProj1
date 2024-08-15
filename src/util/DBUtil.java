@@ -15,10 +15,6 @@ public class DBUtil {
 		prop = new Properties();
 		try (FileInputStream fis = new FileInputStream(PROPERTIES_PATH)){
 			prop.load(fis);
-			System.out.println(prop.getProperty("driver"));
-			System.out.println(prop.getProperty("url"));
-			System.out.println(prop.getProperty("username"));
-			System.out.println(prop.getProperty("password"));
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
