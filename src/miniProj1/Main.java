@@ -204,13 +204,28 @@ public class Main {
 		sc = new Scanner(System.in);
 		System.out.println("아이디 찾기");
 		System.out.print("이름을 입력해 주세요 : ");
+		String name = sc.nextLine();
 		System.out.print("전화번호를 입력해 주세요 : ");
+		String phone = sc.nextLine();
+		String id = memberService.findId(name, phone);
+		if (id == null) {
+			System.out.println("가입하지 않았거나 입력하신 정보가 다릅니다.");
+		}else {
+			System.out.println("아이디 : " + id);
+		}
 	}
 	
 	public static void findPassword() {
 		sc = new Scanner(System.in);
 		System.out.println("비밀번호 찾기");
 		System.out.print("아이디를 입력해 주세요 : ");
+		String userId = sc.nextLine();
+		String password = memberService.findPassword(userId);
+		if (password == null) {
+			System.out.println("가입하지 않은 아이디거나 입력하신 정보가 다릅니다.");
+		}else {
+			System.out.println("비밀번호 : " + password);
+		}
 	}
 
 }

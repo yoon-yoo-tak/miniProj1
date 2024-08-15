@@ -177,5 +177,47 @@ public class MemberService {
 		}
 		return false;
 	}
+	
+	public String findId(String name, String phone) {
+		String query = """
+				SELECT *
+				FROM MEMBER
+				WHERE NAME = ?
+				AND PHONE = ?
+				""";
+		try(Connection conn = db.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(query);){
+				pstmt.setString(1, name);
+				pstmt.setString(2, phone);
+				ResultSet rs = pstmt.executeQuery();
+				if(rs.next()) {
+					return rs.getString("userid");
+				}
+		}catch(SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+			
+		}
+		return null;
+	}
+	
+	public String findPassword(String userId) {
+		String query = """
+				SELECT *
+				FROM MEMBER
+				WHERE USERID = ?
+				""";
+		try(Connection conn = db.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(query);){
+				pstmt.setString(1, userId);
+				ResultSet rs = pstmt.executeQuery();
+				if(rs.next()) {
+					return rs.getString("password");
+				}
+		}catch(SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+			
+		}
+		return null;
+	}
 
 }
