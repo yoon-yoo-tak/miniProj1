@@ -332,28 +332,28 @@ public class Main {
 		if (oper == 1) {
 			return;
 		}else if (oper == 2 && isWriter) {
-			updateArticle(b.key());
+			updateArticle(b.key(), b.password());
 		}else if (oper == 3 && isWriter) {
-			deleteArticle(b.key());
+			deleteArticle(b.key(), b.password());
 		}
 	}
 
-	private static void deleteArticle(int id) {
+	private static void deleteArticle(int id, String articlePassword) {
 		System.out.print("비밀번호를 한 번 더 입력해 주세요. : ");
 		sc = new Scanner(System.in);
 		String password = sc.nextLine();
-		if (checkPassword(loginId, password))
+		if (password.equals(articlePassword)) 
 			boardService.deleteArticle(id);
 		else {
 			System.out.println("비밀번호가 일치하지 않습니다. 초기화면으로 돌아갑니다.");
 		}
 	}
 
-	private static void updateArticle(int id) {
+	private static void updateArticle(int id, String articlePassword) {
 		System.out.print("비밀번호를 한 번 더 입력해 주세요. : ");
 		sc = new Scanner(System.in);
 		String password = sc.nextLine();
-		if (checkPassword(loginId, password)) {
+		if (password.equals(articlePassword)) {
 			System.out.println("변경할 제목을 입력해주세요. : ");
 			String title = sc.nextLine();
 			System.out.println("변경할 내용을 입력해주세요. : ");
