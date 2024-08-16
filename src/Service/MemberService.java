@@ -249,5 +249,32 @@ public class MemberService {
 		}
 		return null;
 	}
+	
+	public void getUserList() {
+		String query = """
+				SELECT *
+				FROM MEMBER
+				WHERE ISDEL = '0'
+				AND ID != 1
+				""";
+		try(Connection conn = db.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(query);){
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				System.out.println("#############################");
+				System.out.println(rs.getInt("id"));
+				System.out.println(rs.getString("userid"));
+				System.out.println(rs.getString("password"));
+				System.out.println(rs.getString("phone"));
+				System.out.println(rs.getString("address"));
+				System.out.println(rs.getString("gender"));
+				System.out.println(rs.getTimestamp("login"));
+				System.out.println(rs.getString("logout"));
+				System.out.println("#############################");
+			}
+		}catch(SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
 
 }

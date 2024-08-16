@@ -22,7 +22,7 @@ public class Main {
 			if (loginId == -1) {
 				mainMenu();
 			}else if (loginId == 1){ // 관리자 메뉴
-				
+				adminMenu();
 			}else {
 				userMenu();
 			}
@@ -110,6 +110,40 @@ public class Main {
 		memberService.registerMember(username, password, name, phone, address, gender);
 	}
 	
+	private static void adminMenu() {
+		System.out.println("0. 유저 목록");
+		System.out.println("1. 내 정보 확인");
+		System.out.println("2. 게시물 목록");
+		System.out.println("3. 로그아웃");
+		System.out.print("원하는 기능의 번호를 입력해주세요. : ");
+		sc = new Scanner(System.in);
+		int x = sc.nextInt();
+		switch(x) {
+			// 유저 정보 확인
+			case 0 -> getUserList(); 	
+			// 내정보 확인
+			case 1 -> getMemberInfo();
+			// 게시물 목록
+			case 2 -> listBoardAndHandling();
+			// 로그아웃
+			case 3 -> logout();
+		}
+	}
+	
+	private static void getUserList() {
+		memberService.getUserList();
+		sc = new Scanner(System.in);
+		System.out.println("1. 유저 삭제");
+		System.out.println("2. 이전 화면으로");
+		System.out.print("원하는 기능을 선택해 주세요 : ");
+		int oper = sc.nextInt();
+		if (oper == 1) {
+			System.out.print("삭제하고자 하는 유저의 번호를 입력해 주세요 : ");
+			int num = sc.nextInt();
+			deleteMember(num);
+		}
+	}
+
 	private static void userMenu() {
 		System.out.println("1. 내 정보 확인");
 		System.out.println("2. 게시물 목록");
@@ -118,13 +152,13 @@ public class Main {
 		sc = new Scanner(System.in);
 		int x = sc.nextInt();
 		switch(x) {
-		// 내정보 확인
-		case 1 -> getMemberInfo();
-		// 게시물 목록
-		case 2 -> listBoardAndHandling();
-		// 로그아웃
-		case 3 -> logout();
-	}
+			// 내정보 확인
+			case 1 -> getMemberInfo();
+			// 게시물 목록
+			case 2 -> listBoardAndHandling();
+			// 로그아웃
+			case 3 -> logout();
+		}
 	}
 
 	private static void logout() {
@@ -149,6 +183,9 @@ public class Main {
 				return;
 			}
 			printBoard(list, curPage);
+			if (loginId == 1) {
+				System.out.println("0. 게시글 삭제");
+			}
 			System.out.println("""
 					1. 페이지 이동
 					2. 이전 페이지로 이동
@@ -159,6 +196,13 @@ public class Main {
 					원하는 기능을 선택하세요 : """);
 			sc = new Scanner(System.in);
 			int oper = sc.nextInt();
+			if (loginId == 1 && oper == 0) {
+				System.out.println("삭제할 게시글의 번호를 입력해 주세요 : ");
+				int num = sc.nextInt();
+				int idx = (num - 1) % 10;
+				BoardDto b = list.get(idx);
+				deleteArticle(b.key());
+			}
 			switch(oper) {
 				// 특정 페이지로 이동
 				case 1 -> {
@@ -231,6 +275,10 @@ public class Main {
 	private static void deleteMember() {
 		 memberService.deleteMember(loginId);
 		 loginId = -1;
+	}
+	
+	private static void deleteMember(int id) {
+		 memberService.deleteMember(id);
 	}
 
 	private static void updateMember() {
@@ -347,6 +395,10 @@ public class Main {
 		else {
 			System.out.println("비밀번호가 일치하지 않습니다. 초기화면으로 돌아갑니다.");
 		}
+	}
+	
+	private static void deleteArticle(int id) {
+		boardService.deleteArticle(id);
 	}
 
 	private static void updateArticle(int id, String articlePassword) {
