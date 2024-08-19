@@ -44,10 +44,8 @@
 
 ### 추가기능 / 리팩토링
 - [ ] Validation Check
-- [ ] 클래스 분리
-- [ ] 상황별 예외메시지 처리
-- [ ] 하드코딩 정리
-  
+- [x] 클래스 분리
+- [ ] 상황별 예외메시지 처리  
 
 # ERD diagram
 ![ERD](https://github.com/yoon-yoo-tak/miniProj1/blob/master/img/erd1.JPG?raw=true)
