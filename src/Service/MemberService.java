@@ -95,13 +95,13 @@ public class MemberService {
 	public void logout(int id){
 		String logout_record = "{call logout_record(?)}";
 		try(Connection conn = db.getConnection();
-				PreparedStatement pstmt = conn.prepareStatement(logout_record);) {
+				PreparedStatement pstmt = conn.prepareStatement(logout_record);){
 			pstmt.setInt(1, id);
 			pstmt.execute();			
 		}catch(SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+	
 	}
 
 	public void getmemberInfo(int id) {

@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import DTO.BoardDto;
 import Service.BoardService;
+import util.DBUtil;
 import util.IOUtil;
 
 public class BoardController {
@@ -20,16 +21,16 @@ public class BoardController {
 
 	public void listBoardAndHandling(int loginId) {
 		curPage = 1;
-       while (true) {
-           List<BoardDto> list = boardService.getBoardList(curPage);
-           if (list.isEmpty()) {
-               System.out.println(curPage + "페이지에 게시물이 존재하지 않습니다. 초기 화면으로 돌아갑니다.");
-               return;
-           }
-           printBoard(list, curPage);
-           if (!handleBoardOptions(list, loginId)) {
-               return;
-           }
+        while (true) {
+            List<BoardDto> list = boardService.getBoardList(curPage);
+            if (list.isEmpty()) {
+                System.out.println(curPage + "페이지에 게시물이 존재하지 않습니다. 초기 화면으로 돌아갑니다.");
+                return;
+            }
+            printBoard(list, curPage);
+            if (!handleBoardOptions(list, loginId)) {
+                return;
+            }
         }
 	}
 

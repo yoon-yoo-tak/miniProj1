@@ -3,10 +3,10 @@ package Controller;
 import java.util.Scanner;
 
 import Service.MemberService;
+import util.DBUtil;
 import util.IOUtil;
 
 public class MemberController {
-	
 	private final MemberService memberService = new MemberService();
 	private final Scanner sc;
 	

@@ -2,7 +2,7 @@ package Controller;
 
 import java.util.Scanner;
 
-import Service.MemberService;
+import util.DBUtil;
 import util.IOUtil;
 
 public class MenuController {
@@ -13,13 +13,10 @@ public class MenuController {
 	
 	public void run() {
 		while (true) {
-			if (loginId == -1) {
-				mainMenu();
-			}else if (loginId == 1) {
-				adminMenu();
-			}else { 
-				userMenu();
-			}
+			Runnable menu = loginId == -1 ? this::mainMenu :
+                			loginId == 1 ? this::adminMenu :
+                						this::userMenu;
+			menu.run();
 		}
 	}
 
@@ -33,7 +30,6 @@ public class MenuController {
 			case 4 -> memberController.findPassword();
 			case 5 -> exit();
 			default -> System.out.println("잘못된 입력입니다. 다시 시도해주세요.");
-			
 		}
 	}
 	
