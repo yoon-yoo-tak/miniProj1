@@ -1,6 +1,5 @@
 package Controller;
 
-import java.sql.SQLException;
 import java.util.Scanner;
 
 import Service.MemberService;
@@ -66,10 +65,7 @@ public class MemberController {
 		}
     }
 	
-	
-	/**
-	 * TODO : Service에서 출력 안하도록 
-	 */
+
 	public int getMemberInfo(int loginId) {
 		int id = loginId;
         memberService.getmemberInfo(loginId);
@@ -79,7 +75,6 @@ public class MemberController {
 		System.out.println("3. 이전화면으로");
 		int x = IOUtil.getInput(sc);
 		switch(x) {
-			// 내정보 수정
 			case 1 -> {
 				System.out.print("비밀번호를 한 번 더 입력해 주세요. : ");
 				String password = IOUtil.getString(sc);
@@ -89,11 +84,9 @@ public class MemberController {
 					System.out.println("비밀번호가 일치하지 않습니다. 초기화면으로 돌아갑니다.");
 				}
 				}
-			// 회원탈퇴
 			case 2 -> {
 				id = deleteMember(loginId);
 			}
-			// 이전화면으로
 			case 3 -> {}
 		}
 		return id;

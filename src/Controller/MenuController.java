@@ -13,19 +13,16 @@ public class MenuController {
 	
 	public void run() {
 		while (true) {
-			if (loginId == -1) { // 로그인 안한 상태
+			if (loginId == -1) {
 				mainMenu();
-			}else if (loginId == 1) { // admin
+			}else if (loginId == 1) {
 				adminMenu();
-			}else { // 로그인한 상태
+			}else { 
 				userMenu();
 			}
 		}
 	}
 
-	/**
-	 * 메인메뉴 처리
-	 */
 	private void mainMenu() {
 		printMainOption();
 		int oper = IOUtil.getInput(sc);
@@ -51,10 +48,6 @@ public class MenuController {
 	}
 	
 
-	//	TODO : 유저랑 어드민 겹침.	
-	/**
-	 * 로그인후 메뉴 처리
-	 */
 	private void printUserOptions() {
 		System.out.println("1. 내 정보 확인");
         System.out.println("2. 게시물 목록");
@@ -73,10 +66,6 @@ public class MenuController {
         }
     }
 	
-	
-	/*
-	 * Admin메뉴 처리
-	 */
 	private void adminMenu() {
 		printAdminMenuOption();
 		int oper = IOUtil.getInput(sc);
