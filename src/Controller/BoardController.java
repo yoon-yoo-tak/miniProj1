@@ -89,8 +89,9 @@ public class BoardController {
     private void deleteSelectedArticle(List<BoardDto> list) {
         System.out.print("삭제할 게시물의 번호를 입력해주세요: ");
         int articleNum = IOUtil.getInput(sc);
+        articleNum = (articleNum - 1) % 10;
         if (articleNum >= 0 && articleNum < list.size()) {
-            boardService.deleteArticle(list.get(articleNum).id());
+            boardService.deleteArticle(list.get(articleNum).key());
         } else {
             System.out.println("잘못된 번호입니다. 초기 화면으로 돌아갑니다.");
         }

@@ -2,6 +2,7 @@ package Controller;
 
 import java.util.Scanner;
 
+import Service.MemberService;
 import util.IOUtil;
 
 public class MenuController {
@@ -98,6 +99,7 @@ public class MenuController {
 	
 	
 	private void logout() {
+		memberController.logout(loginId);
 		loginId = -1;
 		System.out.println("로그아웃 성공");
 	}

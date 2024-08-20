@@ -1,5 +1,6 @@
 package Controller;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 import Service.MemberService;
@@ -61,7 +62,7 @@ public class MemberController {
 		if (oper == 1) {
 			System.out.print("삭제하고자 하는 유저의 번호를 입력해 주세요 : ");
 			int num = IOUtil.getInput(sc);
-			deleteMember(num);
+			deleteMemberAdmin(num);
 		}
     }
 	
@@ -69,7 +70,8 @@ public class MemberController {
 	/**
 	 * TODO : Service에서 출력 안하도록 
 	 */
-	public void getMemberInfo(int loginId) {
+	public int getMemberInfo(int loginId) {
+		int id = loginId;
         memberService.getmemberInfo(loginId);
 		System.out.println("원하는 기능의 번호를 입력해주세요.");
 		System.out.println("1. 내 정보 수정");
@@ -82,21 +84,21 @@ public class MemberController {
 				System.out.print("비밀번호를 한 번 더 입력해 주세요. : ");
 				String password = IOUtil.getString(sc);
 				if (checkPassword(loginId, password))
-					updateMember();
+					updateMember(loginId);
 				else {
 					System.out.println("비밀번호가 일치하지 않습니다. 초기화면으로 돌아갑니다.");
 				}
 				}
 			// 회원탈퇴
-			case 2 -> deleteMember();
+			case 2 -> {
+				id = deleteMember(loginId);
+			}
 			// 이전화면으로
 			case 3 -> {}
 		}
+		return id;
     }
 	
-	private void deleteMember() {
-	}
-
 
 	private boolean checkPassword(int loginId, String password) {
 		return memberService.checkPassword(loginId, password);
@@ -155,9 +157,18 @@ public class MemberController {
 		}
     }
 
-    public void deleteMember(int id) {
+    public void deleteMemberAdmin(int id) {
         memberService.deleteMember(id);
     }
+    
+    public int deleteMember(int id) {
+    	memberService.deleteMember(id);
+    	return -1;
+    }
+
+	public void logout(int loginId){
+		memberService.logout(loginId);
+	}
 	
 }
 
