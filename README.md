@@ -43,9 +43,7 @@
   - [x] 삭제 기능
 
 ### 추가기능 / 리팩토링
-- [ ] Validation Check
-- [x] 클래스 분리
-- [ ] 상황별 예외메시지 처리  
+- [ ] MVC 패턴으로 변경
 
 # ERD diagram
 ![ERD](https://github.com/yoon-yoo-tak/miniProj1/blob/master/img/erd1.JPG?raw=true)
