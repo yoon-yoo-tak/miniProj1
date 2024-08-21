@@ -1,8 +1,8 @@
-package Controller;
+package controller;
 
 import java.util.Scanner;
 
-import Service.MemberService;
+import prev.MemberService;
 import util.DBUtil;
 import util.IOUtil;
 

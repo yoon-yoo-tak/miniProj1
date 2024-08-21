@@ -1,4 +1,4 @@
-package Controller;
+package controller;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import DTO.BoardDto;
-import Service.BoardService;
+import prev.BoardService;
 import util.DBUtil;
 import util.IOUtil;
 
@@ -150,9 +150,9 @@ public class BoardController {
 		String password = IOUtil.getString(sc);
 		if (password.equals(articlePassword)) {
 			System.out.println("변경할 제목을 입력해주세요. : ");
-			String title = sc.nextLine();
+			String title = IOUtil.getString(sc);
 			System.out.println("변경할 내용을 입력해주세요. : ");
-			String content = sc.nextLine();
+			String content = IOUtil.getString(sc);
 			boardService.updateArticle(id, title, content);
 		}
 		else {
