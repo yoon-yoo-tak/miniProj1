@@ -8,42 +8,20 @@ import view.Console;
 
 public class MemberController {
 	private final MemberService memberService = new MemberService();
-	private final Console console;
 	
-	public MemberController(Console console) {
-		this.console = console;
+	public boolean register(MemberDto member) {
+		return memberService.register(member);
 	}
 	
-	public void register() {
-		String username = console.getUserInput("아이디를 입력해 주세요 : ");
-		String password = console.getUserInput("비밀번호를 입력해 주세요 : ");
-		String name = console.getUserInput("이름을 입력해 주세요 : ");
-		String phone = console.getUserInput("전화번호를 입력해 주세요 : ");
-		String address = console.getUserInput("주소를 입력해 주세요 : ");
-		String gender = console.getUserInput("성별을 입력해 주세요(남/여) :" );
-		
-		boolean success = memberService.register(new MemberDto(username, password, name, phone, address, gender));
-		if (success) {
-			console.print("회원가입 성공");
-		}else {
-			console.print("회원가입 실패");
-		}
-	}
-	
-	public int login() {
-		String usernmae = console.getUserInput("아이디를 입력해 주세요 : ");
-		String password = console.getUserInput("비밀번호를 입력해 주세요 : ");
-		return memberService.login(usernmae, password);
+	public int login(String username, String password) {
+		return memberService.login(username, password);
 	}
 
-	public String findId() {
-		String name = console.getUserInput("이름을 입력해 주세요 : ");
-		String phone = console.getUserInput("전화번호을 입력해 주세요 : ");
+	public String findId(String name, String phone) {
 		return memberService.findId(name, phone);
 	}
 
-	public String findPassword() {
-		String username = console.getUserInput("아이디를 입력해 주세요 : ");
+	public String findPassword(String username) {
 		return memberService.findPassword(username);
 	}
 

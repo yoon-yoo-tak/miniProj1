@@ -11,8 +11,8 @@ import controller.BoardController;
 import controller.MemberController;
 
 public class Console {
-	private final MemberController memberController = new MemberController(this);
-	private final BoardController boardController = new BoardController(this);
+	private final MemberController memberController = new MemberController();
+	private final BoardController boardController = new BoardController();
 	private final Scanner sc;
 	private int loginId = -1, page = 1;
 	private MemberDto loginMember;
@@ -34,9 +34,23 @@ public class Console {
 		printOptions(new String[] {"회원가입", "로그인", "아이디 찾기", "비밀번호 찾기", "종료"});
 		int oper = Integer.parseInt(getUserInput("원하는 기능의 번호를 입력해 주세요 : "));
 		switch(oper) {
-			case 1 -> memberController.register();
+			case 1 -> {
+				String username = getUserInput("아이디를 입력해 주세요 : ");
+				String password = getUserInput("비밀번호를 입력해 주세요 : ");
+				String name = getUserInput("이름을 입력해 주세요 : ");
+				String phone = getUserInput("전화번호를 입력해 주세요 : ");
+				String address = getUserInput("주소를 입력해 주세요 : ");
+				String gender = getUserInput("성별을 입력해 주세요(남/여) :" );
+				if (memberController.register(new MemberDto(username, password, name, phone, address, gender))) {
+					print("회원가입 성공");
+				}else {
+					print("회원가입 실패");
+				}
+			}
 			case 2 -> {
-				loginId = memberController.login();
+				String usernmae = getUserInput("아이디를 입력해 주세요 : ");
+				String password = getUserInput("비밀번호를 입력해 주세요 : ");
+				loginId = memberController.login(usernmae, password);
 				if (loginId != -1)
 					loginMember = memberController.getMemberInfo(loginId);
 				else {
@@ -44,19 +58,22 @@ public class Console {
 				}
 			}
 			case 3 -> {
-				String id = memberController.findId();
+				String name = getUserInput("이름을 입력해 주세요 : ");
+				String phone = getUserInput("전화번호을 입력해 주세요 : ");
+				String id = memberController.findId(name, phone);
 				if (id == null) {
 					print("가입하지 않았거나 입력한 정보가 다릅니다.");
 				}else {
-					print("아이디는 : \"" + id + "\" 입니다.");
+					print("아이디는 \"" + id + "\" 입니다.");
 				}
 			}
 			case 4 -> {
-				String password = memberController.findPassword();
+				String username = getUserInput("아이디를 입력해 주세요 : ");
+				String password = memberController.findPassword(username);
 				if (password == null) {
 					print("가입하지 않았거나 입력한 정보가 다릅니다.");
 				}else {
-					print("비밀번호는 : \"" + password + "\" 입니다.");
+					print("비밀번호는 \"" + password + "\" 입니다.");
 				}
 			}
 			case 5 -> exit();

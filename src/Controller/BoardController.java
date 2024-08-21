@@ -9,11 +9,6 @@ import view.Console;
 public class BoardController {
 	
 	private final BoardService boardService = new BoardService();
-	private final Console console;
-	
-	public BoardController(Console console) {
-		this.console = console;
-	}
 
 	public List<BoardDto> findAll(int page) {
 		return boardService.findAll(page);
