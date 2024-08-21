@@ -13,13 +13,14 @@ public class MemberService {
 		return memberRepository.registerMember(member);
 	}
 	
-	public boolean login(String username, String password) {
+	public int login(String username, String password) {
 		boolean ret = memberRepository.login(username, password);
+		int id = -1;
 		if (ret) {
-			int id = memberRepository.findIdByUsername(username);
+			id = memberRepository.findIdByUsername(username);
 			memberRepository.recordLogin(id);
 		}
-		return ret;
+		return id;
 	}
 	
 	public int getId(String username) {
@@ -34,6 +35,10 @@ public class MemberService {
 		return memberRepository.findMemberById(id);
 	}
 	
+	public String findId(String name, String phone) {
+		return memberRepository.findIdByNameAndPhone(name, phone);
+	}
+	
 	public boolean updateMember(int loginId, MemberDto member) {
 		return memberRepository.updateMember(loginId, member) == 1 ? true : false;
 	}
@@ -42,7 +47,11 @@ public class MemberService {
 		return memberRepository.findPasswordByUserId(userId);
 	}
 	
-	public void deleteMember(int id) {
+	public String findPasswordByKey(int id) {
+		return memberRepository.findPassword(id);
+	}
+	
+	public void deleteMember(String id) {
 		memberRepository.deleteMemberById(id);
 	}
 	

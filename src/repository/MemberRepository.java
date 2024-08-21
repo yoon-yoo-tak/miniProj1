@@ -15,7 +15,7 @@ public interface MemberRepository {
 	String findPassword(int loginId);
 	String findIdByNameAndPhone(String name, String phone);
 	String findPasswordByUserId(String userId);
-	void deleteMemberById(int id);
+	void deleteMemberById(String id);
 	String findNameById(int id);
 	List<MemberDto> findAll();
 }

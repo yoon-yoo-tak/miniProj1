@@ -228,11 +228,11 @@ public class MemberRepositoryImpl implements MemberRepository{
 	}
 
 	@Override
-	public void deleteMemberById(int id) {
+	public void deleteMemberById(String id) {
 		String procedure = "{call delete_member(?)}";
 		try(Connection conn = db.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(procedure);){
-				pstmt.setInt(1, id);
+				pstmt.setString(1, id);
 				pstmt.execute();
 				System.out.println("회원 탈퇴를 완료했습니다.");
 		}catch(SQLException | ClassNotFoundException e) {
@@ -272,6 +272,7 @@ public class MemberRepositoryImpl implements MemberRepository{
 			PreparedStatement pstmt = conn.prepareStatement(query);){
 			ResultSet rs = pstmt.executeQuery();
 			list = new ArrayList<>();
+			System.out.println(list.size());
 			while (rs.next()) {
 				list.add(new MemberDto(rs.getString("userid"),
 						rs.getString("password"),
