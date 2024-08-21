@@ -297,7 +297,7 @@ public class Console {
 		
 		switch(oper) {
 			case 1 -> {
-				memberController.updateMember(loginId, new MemberDto(username, loginMember.password(), name, phone, address, loginMember.gender()));
+				memberController.updateMember(loginId, new MemberDto(username, password, name, phone, address, loginMember.gender()));
 			}
 			case 2 -> updateMember();
 			case 3 -> {}
