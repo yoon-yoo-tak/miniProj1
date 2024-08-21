@@ -43,7 +43,7 @@
   - [x] 삭제 기능
 
 ### 추가기능 / 리팩토링
-- [ ] MVC 패턴으로 변경
+- [x] MVC 패턴으로 변경
 
 # ERD diagram
 ![ERD](https://github.com/yoon-yoo-tak/miniProj1/blob/master/img/erd1.JPG?raw=true)
